@@ -602,7 +602,7 @@ class MessageSimple extends PureComponent {
     }
     return (
       <React.Fragment>
-        {editing && (
+        {editing && clearEditingState && (
           <Modal open={editing} onClose={clearEditingState}>
             <MessageInput
               Input={EditMessageForm}
