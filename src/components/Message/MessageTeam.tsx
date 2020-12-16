@@ -57,7 +57,8 @@ type MessageTeamWithContextProps<
   messageWrapperRef: React.MutableRefObject<HTMLDivElement | null>;
   onReactionListClick: ReactEventHandler;
   reactionSelectorRef: React.MutableRefObject<HTMLDivElement | null>;
-  showDetailedReactions: boolean;
+    showDetailedReactions: boolean;
+    customAvatarElement?: React.ReactElement;
 };
 
 const MessageTeamWithContext = <
@@ -119,6 +120,7 @@ const MessageTeamWithContext = <
     setEditingState,
     threadList,
     unsafeHTML,
+    customAvatarElement,
   } = props;
 
   const { t, userLanguage } = useTranslationContext();
@@ -196,13 +198,15 @@ const MessageTeamWithContext = <
       >
         <div className='str-chat__message-team-meta'>
           {firstGroupStyle === 'top' || firstGroupStyle === 'single' || initialMessage ? (
-            <Avatar
-              image={message.user?.image}
-              name={message.user?.name || message.user?.id}
-              onClick={onUserClick}
-              onMouseOver={onUserHover}
-              size={40}
-            />
+            customAvatarElement || (
+              <Avatar
+                image={message.user?.image}
+                name={message.user?.name || message.user?.id}
+                onClick={onUserClick}
+                onMouseOver={onUserHover}
+                size={40}
+              />
+            )
           ) : (
             <div data-testid='team-meta-spacer' style={{ marginRight: 0, width: 40 }} />
           )}
