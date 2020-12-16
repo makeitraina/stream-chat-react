@@ -59,6 +59,7 @@ type MessageTeamWithContextProps<
   reactionSelectorRef: React.MutableRefObject<HTMLDivElement | null>;
     showDetailedReactions: boolean;
     customAvatarElement?: React.ReactElement;
+    noBorder?: boolean;
 };
 
 const MessageTeamWithContext = <
@@ -121,6 +122,7 @@ const MessageTeamWithContext = <
     threadList,
     unsafeHTML,
     customAvatarElement,
+    noBorder,
   } = props;
 
   const { t, userLanguage } = useTranslationContext();
@@ -231,6 +233,8 @@ const MessageTeamWithContext = <
           <div
             className={`str-chat__message-team-content str-chat__message-team-content--${firstGroupStyle} str-chat__message-team-content--${
               message.text === '' ? 'image' : 'text'
+            } str-chat__message-team-content--${
+              noBorder ? 'no-border' : 'border'
             }`}
             data-testid='message-team-content'
           >
