@@ -77,6 +77,7 @@ const MessageTeam = (props) => {
     updateMessage: propUpdateMessage,
     onUserClick: propOnUserClick,
     onUserHover: propOnUserHover,
+    customAvatarElement,
     t: propT,
   } = props;
 
@@ -182,13 +183,15 @@ const MessageTeam = (props) => {
           {firstGroupStyle === 'top' ||
           firstGroupStyle === 'single' ||
           initialMessage ? (
-            <Avatar
-              image={message?.user?.image}
-              name={message?.user?.name || message?.user?.id}
-              size={40}
-              onClick={onUserClick}
-              onMouseOver={onUserHover}
-            />
+            customAvatarElement || (
+              <Avatar
+                image={message?.user?.image}
+                name={message?.user?.name || message?.user?.id}
+                size={40}
+                onClick={onUserClick}
+                onMouseOver={onUserHover}
+              />
+            )
           ) : (
             <div
               data-testid="team-meta-spacer"

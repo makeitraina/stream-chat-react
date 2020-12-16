@@ -1402,7 +1402,9 @@ export type MessageTeamState = {
   actionsBoxOpen: boolean;
   reactionSelectorOpen: boolean;
 };
-export interface MessageTeamProps extends MessageUIComponentProps {}
+export interface MessageTeamProps extends MessageUIComponentProps {
+  customAvatarElement?: React.ReactElement;
+}
 export interface MessageTeamAttachmentsProps {
   Attachment?: React.ElementType<WrapperAttachmentUIComponentProps>;
   message?: Client.MessageResponse;
