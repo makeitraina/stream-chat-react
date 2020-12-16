@@ -123,6 +123,10 @@
         position: relative;
         margin: 0 0;
 
+        &--no-border {
+          border-left: 0;
+        }
+
         &--image {
           padding-left: 0;
           border-left-color: transparent;
@@ -190,7 +194,7 @@
 
         &--top,
         &--single {
-          &:not(.str-chat__message-team-content--image) {
+          &:not(.str-chat__message-team-content--image):not(.str-chat__message-team-content--no-border) {
             &::before {
               content: '';
               position: absolute;

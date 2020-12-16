@@ -1352,6 +1352,7 @@ export type MessageTeamState = {
 };
 export interface MessageTeamProps extends MessageUIComponentProps {
   customAvatarElement?: React.ReactElement;
+  noBorder?: boolean;
 }
 export interface MessageTeamAttachmentsProps {
   Attachment?: React.ElementType<WrapperAttachmentUIComponentProps>;

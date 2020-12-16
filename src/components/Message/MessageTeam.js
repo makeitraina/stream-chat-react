@@ -72,6 +72,7 @@ const MessageTeam = (props) => {
     onUserClick: propOnUserClick,
     onUserHover: propOnUserHover,
     customAvatarElement,
+    noBorder,
     t: propT,
   } = props;
 
@@ -214,6 +215,8 @@ const MessageTeam = (props) => {
             data-testid="message-team-content"
             className={`str-chat__message-team-content str-chat__message-team-content--${firstGroupStyle} str-chat__message-team-content--${
               message?.text === '' ? 'image' : 'text'
+            } str-chat__message-team-content--${
+              noBorder ? 'no-border' : 'border'
             }`}
           >
             {!initialMessage &&
