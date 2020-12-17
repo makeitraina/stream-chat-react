@@ -60,6 +60,10 @@ type MessageTeamWithContextProps<
     showDetailedReactions: boolean;
     customAvatarElement?: React.ReactElement;
     noBorder?: boolean;
+    hideTimestamp?: boolean;
+    authorSuffix?: React.ReactElement | null;
+    authorTextStyle: React.CSSProperties;
+    messageTextStyle: React.CSSProperties;
 };
 
 const MessageTeamWithContext = <
@@ -123,6 +127,10 @@ const MessageTeamWithContext = <
     unsafeHTML,
     customAvatarElement,
     noBorder,
+    hideTimestamp,
+    authorSuffix,
+    authorTextStyle = {},
+    messageTextStyle = {},
   } = props;
 
   const { t, userLanguage } = useTranslationContext();
@@ -212,7 +220,9 @@ const MessageTeamWithContext = <
           ) : (
             <div data-testid='team-meta-spacer' style={{ marginRight: 0, width: 40 }} />
           )}
-          <MessageTimestamp formatDate={formatDate} message={message} />
+          {!hideTimestamp && (
+            <MessageTimestamp formatDate={formatDate} message={message} />
+          )}
         </div>
         <div className='str-chat__message-team-group'>
           {message &&
@@ -222,7 +232,10 @@ const MessageTeamWithContext = <
                 data-testid='message-team-author'
                 onClick={onUserClick}
               >
-                <strong>{message.user?.name || message.user?.id}</strong>
+                <strong style={authorTextStyle}>
+                  {message.user?.name || message.user?.id}
+                  {authorSuffix}
+                </strong>
                 {message.type === 'error' && (
                   <div className='str-chat__message-team-error-header'>
                     {t('Only visible to you')}
@@ -237,6 +250,7 @@ const MessageTeamWithContext = <
               noBorder ? 'no-border' : 'border'
             }`}
             data-testid='message-team-content'
+            style={messageTextStyle}
           >
             {!initialMessage &&
               message &&
