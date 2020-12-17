@@ -73,6 +73,10 @@ const MessageTeam = (props) => {
     onUserHover: propOnUserHover,
     customAvatarElement,
     noBorder,
+    hideTimestamp,
+    authorSuffix,
+    authorTextStyle = {},
+    messageTextStyle = {},
     t: propT,
   } = props;
 
@@ -187,11 +191,13 @@ const MessageTeam = (props) => {
               style={{ width: 40, marginRight: 0 }}
             />
           )}
-          <MessageTimestamp
-            message={message}
-            tDateTimeParser={props.tDateTimeParser}
-            formatDate={formatDate}
-          />
+          {!hideTimestamp && (
+            <MessageTimestamp
+              message={message}
+              tDateTimeParser={props.tDateTimeParser}
+              formatDate={formatDate}
+            />
+          )}
         </div>
         <div className="str-chat__message-team-group">
           {message &&
@@ -203,7 +209,10 @@ const MessageTeam = (props) => {
                 className="str-chat__message-team-author"
                 onClick={onUserClick}
               >
-                <strong>{message.user?.name || message.user?.id}</strong>
+                <strong style={authorTextStyle}>
+                  {message.user?.name || message.user?.id}
+                  {authorSuffix}
+                </strong>
                 {message.type === 'error' && (
                   <div className="str-chat__message-team-error-header">
                     {t('Only visible to you')}
@@ -218,6 +227,7 @@ const MessageTeam = (props) => {
             } str-chat__message-team-content--${
               noBorder ? 'no-border' : 'border'
             }`}
+            style={messageTextStyle}
           >
             {!initialMessage &&
               message &&
