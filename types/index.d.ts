@@ -1355,8 +1355,8 @@ export interface MessageTeamProps extends MessageUIComponentProps {
   noBorder?: boolean;
   hideTimestamp?: boolean;
   authorSuffix?: React.ReactElement | null;
-  authorTextStyle: CSS.Properties;
-  messageTextStyle: CSS.Properties;
+  authorTextStyle?: CSS.Properties;
+  messageTextStyle?: CSS.Properties;
 }
 export interface MessageTeamAttachmentsProps {
   Attachment?: React.ElementType<WrapperAttachmentUIComponentProps>;
