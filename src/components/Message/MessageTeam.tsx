@@ -62,8 +62,8 @@ type MessageTeamWithContextProps<
     noBorder?: boolean;
     hideTimestamp?: boolean;
     authorSuffix?: React.ReactElement | null;
-    authorTextStyle: React.CSSProperties;
-    messageTextStyle: React.CSSProperties;
+    authorTextStyle?: React.CSSProperties;
+    messageTextStyle?: React.CSSProperties;
 };
 
 const MessageTeamWithContext = <
