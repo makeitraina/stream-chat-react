@@ -126,6 +126,8 @@ export type MessageInputProps<
    * Defaults to and accepts same props as: [List](https://github.com/GetStream/stream-chat-react/blob/master/src/components/AutoCompleteTextarea/List.js)
    */
   SuggestionList?: React.ComponentType<SuggestionListProps<Co, Us, V>>;
+  /** optional method to check if files being uploaded are all valid */
+  validateFiles?: (files: File[]) => Promise<boolean>;
 };
 
 const UnMemoizedMessageInput = <

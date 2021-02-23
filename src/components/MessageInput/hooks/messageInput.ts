@@ -368,6 +368,7 @@ export const useMessageInput = <
     overrideSubmitHandler,
     parent,
     publishTypingEvent,
+    validateFiles,
   } = props;
 
   const {
@@ -829,7 +830,19 @@ export const useMessageInput = <
   const maxFilesLeft = maxFilesAllowed - numberOfUploads;
 
   const uploadNewFiles = useCallback(
-    (files: FileList | File[] | FileLike[]) => {
+    /**
+     * Start upload new files but first check if files need to be validated
+     * If files need to be validated and callback returns files are not valid
+     * then dont proceed. App will handle invalid files.
+     */
+    async (files: FileList | File[] | FileLike[]) => {
+      if (validateFiles) {
+        const isValid = await validateFiles(files);
+        if (!isValid) {
+          return;
+        }
+      }
+
       Array.from(files)
         .slice(0, maxFilesLeft)
         .forEach((file) => {
@@ -844,7 +857,7 @@ export const useMessageInput = <
           }
         });
     },
-    [maxFilesLeft, noFiles],
+    [maxFilesLeft, noFiles, validateFiles],
   );
 
   const onPaste = useCallback(
