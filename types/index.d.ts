@@ -726,7 +726,7 @@ export interface MessageInputProps {
   /** Custom error handler, called when file/image uploads fail. */
   errorHandler?: (e: Error, type: string, file: object) => Promise<any> | void;
   /** optional method to check if files being uploaded are all valid */
-  validateFiles?: (files: File[]) => Promise<boolean>;
+  validateFiles?: (files: FileList) => boolean;
 }
 
 export type ImageUpload = {

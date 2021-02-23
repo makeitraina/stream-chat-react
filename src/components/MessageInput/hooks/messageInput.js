@@ -688,10 +688,12 @@ export default function useMessageInput(props) {
      * then dont proceed. App will handle invalid files.
      * @param {FileList} files
      */
-    async (files) => {
+    (files) => {
       if (validateFiles) {
-        const isValid = await validateFiles(files);
-        if (!isValid) {
+        console.info('Validating files', files);
+        const result = validateFiles(files);
+        if (!result) {
+          console.info('validate func returned files not valid', result);
           return;
         }
       }
