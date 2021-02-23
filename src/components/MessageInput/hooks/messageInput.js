@@ -222,6 +222,7 @@ export default function useMessageInput(props) {
     overrideSubmitHandler,
     parent,
     publishTypingEvent,
+    validateFiles,
   } = props;
 
   const {
@@ -682,9 +683,19 @@ export default function useMessageInput(props) {
 
   const uploadNewFiles = useCallback(
     /**
+     * Start upload new files but first check if files need to be validated
+     * If files need to be validated and callback returns files are not valid
+     * then dont proceed. App will handle invalid files.
      * @param {FileList} files
      */
-    (files) => {
+    async (files) => {
+      if (validateFiles) {
+        const isValid = await validateFiles(files);
+        if (!isValid) {
+          return;
+        }
+      }
+
       Array.from(files)
         .slice(0, maxFilesLeft)
         .forEach((file) => {
@@ -699,7 +710,7 @@ export default function useMessageInput(props) {
           }
         });
     },
-    [maxFilesLeft, noFiles],
+    [maxFilesLeft, noFiles, validateFiles],
   );
 
   const onPaste = useCallback(
