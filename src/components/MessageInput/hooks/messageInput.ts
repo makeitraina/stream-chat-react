@@ -833,12 +833,14 @@ export const useMessageInput = <
     /**
      * Start upload new files but first check if files need to be validated
      * If files need to be validated and callback returns files are not valid
-     * then dont proceed. App will handle invalid files.
+     * then don't proceed. App will handle invalid files.
      */
     async (files: FileList | File[] | FileLike[]) => {
       if (validateFiles) {
-        const isValid = await validateFiles(files);
-        if (!isValid) {
+        console.info('Validating files', files);
+        const result = validateFiles(files);
+        if (!result) {
+          console.info('validate func returned files not valid', result);
           return;
         }
       }

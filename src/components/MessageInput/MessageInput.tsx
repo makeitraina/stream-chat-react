@@ -127,7 +127,7 @@ export type MessageInputProps<
    */
   SuggestionList?: React.ComponentType<SuggestionListProps<Co, Us, V>>;
   /** optional method to check if files being uploaded are all valid */
-  validateFiles?: (files: File[]) => Promise<boolean>;
+  validateFiles?: (files: FileList) => Promise<boolean>;
 };
 
 const UnMemoizedMessageInput = <
