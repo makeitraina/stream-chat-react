@@ -1,6 +1,6 @@
 {
   "name": "stream-chat-react-ext",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "description": "React components to create chat conversations or livestream style chat",
   "author": "GetStream",
   "homepage": "https://getstream.io/chat/",
