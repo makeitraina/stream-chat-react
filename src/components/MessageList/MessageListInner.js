@@ -231,7 +231,7 @@ const MessageListInner = (props) => {
   ]);
 
   const elements = useMemo(() => {
-    return enrichedMessages.map((message) => {
+    return enrichedMessages.map((message, index) => {
       if (message.type === 'message.date') {
         if (threadList) return null;
 
@@ -265,7 +265,7 @@ const MessageListInner = (props) => {
         return (
           <li
             className={`str-chat__li str-chat__li--${groupStyles}`}
-            key={message.id || message.created_at}
+            key={`${message.id}-${index}`}
             onLoadCapture={onMessageLoadCaptured}
           >
             <Message
