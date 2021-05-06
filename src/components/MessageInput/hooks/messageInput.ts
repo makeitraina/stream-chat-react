@@ -838,7 +838,7 @@ export const useMessageInput = <
     async (files: FileList | File[] | FileLike[]) => {
       if (validateFiles) {
         console.info('Validating files', files);
-        const result = validateFiles(files);
+        const result = await validateFiles(files as FileList);
         if (!result) {
           console.info('validate func returned files not valid', result);
           return;

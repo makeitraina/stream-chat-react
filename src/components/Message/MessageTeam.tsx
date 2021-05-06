@@ -57,13 +57,13 @@ type MessageTeamWithContextProps<
   messageWrapperRef: React.MutableRefObject<HTMLDivElement | null>;
   onReactionListClick: ReactEventHandler;
   reactionSelectorRef: React.MutableRefObject<HTMLDivElement | null>;
-    showDetailedReactions: boolean;
-    customAvatarElement?: React.ReactElement;
-    noBorder?: boolean;
-    hideTimestamp?: boolean;
-    authorSuffix?: React.ReactElement | null;
-    authorTextStyle?: React.CSSProperties;
-    messageTextStyle?: React.CSSProperties;
+  showDetailedReactions: boolean;
+  authorSuffix?: React.ReactElement | null;
+  authorTextStyle?: React.CSSProperties;
+  customAvatarElement?: React.ReactElement;
+  hideTimestamp?: boolean;
+  messageTextStyle?: React.CSSProperties;
+  noBorder?: boolean;
 };
 
 const MessageTeamWithContext = <
@@ -220,9 +220,7 @@ const MessageTeamWithContext = <
           ) : (
             <div data-testid='team-meta-spacer' style={{ marginRight: 0, width: 40 }} />
           )}
-          {!hideTimestamp && (
-            <MessageTimestamp formatDate={formatDate} message={message} />
-          )}
+          {!hideTimestamp && <MessageTimestamp formatDate={formatDate} message={message} />}
         </div>
         <div className='str-chat__message-team-group'>
           {message &&
@@ -246,9 +244,7 @@ const MessageTeamWithContext = <
           <div
             className={`str-chat__message-team-content str-chat__message-team-content--${firstGroupStyle} str-chat__message-team-content--${
               message.text === '' ? 'image' : 'text'
-            } str-chat__message-team-content--${
-              noBorder ? 'no-border' : 'border'
-            }`}
+            } str-chat__message-team-content--${noBorder ? 'no-border' : 'border'}`}
             data-testid='message-team-content'
             style={messageTextStyle}
           >
