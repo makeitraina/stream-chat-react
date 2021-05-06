@@ -835,10 +835,10 @@ export const useMessageInput = <
      * If files need to be validated and callback returns files are not valid
      * then don't proceed. App will handle invalid files.
      */
-    async (files: FileList | File[] | FileLike[]) => {
+    (files: FileList | File[] | FileLike[]) => {
       if (validateFiles) {
         console.info('Validating files', files);
-        const result = await validateFiles(files as FileList);
+        const result = validateFiles(files as FileList);
         if (!result) {
           console.info('validate func returned files not valid', result);
           return;
