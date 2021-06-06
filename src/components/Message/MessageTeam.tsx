@@ -51,6 +51,12 @@ type MessageTeamWithContextProps<
   onReactionListClick: ReactEventHandler;
   reactionSelectorRef: React.MutableRefObject<HTMLDivElement | null>;
   showDetailedReactions: boolean;
+  authorSuffix?: React.ReactElement | null;
+  authorTextStyle?: React.CSSProperties;
+  customAvatarElement?: React.ReactElement;
+  hideTimestamp?: boolean;
+  messageTextStyle?: React.CSSProperties;
+  noBorder?: boolean;
 };
 
 const MessageTeamWithContext = <
@@ -88,6 +94,13 @@ const MessageTeamWithContext = <
     showDetailedReactions,
     threadList,
     unsafeHTML,
+    customAvatarElement,
+    noBorder,
+    hideTimestamp,
+    authorSuffix,
+    authorTextStyle = {},
+    messageTextStyle = {},
+    renderTextOptions = {},
   } = props;
 
   const {
@@ -112,10 +125,10 @@ const MessageTeamWithContext = <
 
   const messageMentionedUsersItem = message.mentioned_users;
 
-  const messageText = useMemo(() => renderText(messageTextToRender, messageMentionedUsersItem), [
-    messageMentionedUsersItem,
-    messageTextToRender,
-  ]);
+  const messageText = useMemo(
+    () => renderText(messageTextToRender, messageMentionedUsersItem, renderTextOptions),
+    [messageMentionedUsersItem, messageTextToRender, renderTextOptions],
+  );
 
   const firstGroupStyle = groupStyles ? groupStyles[0] : 'single';
 
@@ -171,38 +184,45 @@ const MessageTeamWithContext = <
       >
         <div className='str-chat__message-team-meta'>
           {firstGroupStyle === 'top' || firstGroupStyle === 'single' || initialMessage ? (
-            <Avatar
-              image={message.user?.image}
-              name={message.user?.name || message.user?.id}
-              onClick={onUserClick}
-              onMouseOver={onUserHover}
-              size={40}
-            />
+            customAvatarElement || (
+              <Avatar
+                image={message.user?.image}
+                name={message.user?.name || message.user?.id}
+                onClick={onUserClick}
+                onMouseOver={onUserHover}
+                size={40}
+              />
+            )
           ) : (
             <div data-testid='team-meta-spacer' style={{ marginRight: 0, width: 40 }} />
           )}
-          <MessageTimestamp />
+          {!hideTimestamp && <MessageTimestamp />}
         </div>
         <div className='str-chat__message-team-group'>
-          {(firstGroupStyle === 'top' || firstGroupStyle === 'single' || initialMessage) && (
-            <div
-              className='str-chat__message-team-author'
-              data-testid='message-team-author'
-              onClick={onUserClick}
-            >
-              <strong>{message.user?.name || message.user?.id}</strong>
-              {message.type === 'error' && (
-                <div className='str-chat__message-team-error-header'>
-                  {t('Only visible to you')}
-                </div>
-              )}
-            </div>
-          )}
+          {message &&
+            (firstGroupStyle === 'top' || firstGroupStyle === 'single' || initialMessage) && (
+              <div
+                className='str-chat__message-team-author'
+                data-testid='message-team-author'
+                onClick={onUserClick}
+              >
+                <strong style={authorTextStyle}>
+                  {message.user?.name || message.user?.id}
+                  {authorSuffix}
+                </strong>
+                {message.type === 'error' && (
+                  <div className='str-chat__message-team-error-header'>
+                    {t('Only visible to you')}
+                  </div>
+                )}
+              </div>
+            )}
           <div
             className={`str-chat__message-team-content str-chat__message-team-content--${firstGroupStyle} str-chat__message-team-content--${
               message.text === '' ? 'image' : 'text'
-            }`}
+            } str-chat__message-team-content--${noBorder ? 'no-border' : 'border'}`}
             data-testid='message-team-content'
+            style={messageTextStyle}
           >
             {message.quoted_message && <QuotedMessage />}
             {!initialMessage &&

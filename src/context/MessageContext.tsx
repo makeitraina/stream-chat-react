@@ -127,6 +127,8 @@ export type MessageContextValue<
     mentioned_users?: UserResponse<Us>[],
     options?: RenderTextOptions,
   ) => JSX.Element | null;
+  /** options to pass to default render text component */
+  renderTextOptions?: RenderTextOptions;
   /** Whether or not the Message is in a Thread */
   threadList?: boolean;
   /** render HTML instead of markdown. Posting HTML is only allowed server-side */

@@ -34,7 +34,7 @@ export const useAttachments = <
   state: MessageInputState<At, Us>,
   dispatch: React.Dispatch<MessageInputReducerAction<Us>>,
 ) => {
-  const { noFiles } = props;
+  const { noFiles, validateFiles } = props;
   const { fileUploads, imageUploads } = state;
   const { maxNumberOfFiles, multipleUploads } = useChannelStateContext<
     At,
@@ -69,7 +69,19 @@ export const useAttachments = <
   const maxFilesLeft = maxFilesAllowed - numberOfUploads;
 
   const uploadNewFiles = useCallback(
+    /**
+     * Start upload new files but first check if files need to be validated
+     * If files need to be validated and callback returns files are not valid
+     * then don't proceed. App will handle invalid files.
+     */
     (files: FileList | File[] | FileLike[]) => {
+      if (validateFiles) {
+        const isValid = validateFiles(files as FileList);
+        if (!isValid) {
+          return;
+        }
+      }
+
       Array.from(files)
         .slice(0, maxFilesLeft)
         .forEach((file) => {

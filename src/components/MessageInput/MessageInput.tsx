@@ -104,6 +104,8 @@ export type MessageInputProps<
   parent?: StreamMessage<At, Ch, Co, Ev, Me, Re, Us>;
   /** Enable/disable firing the typing event */
   publishTypingEvent?: boolean;
+  /** optional method to check if files being uploaded are all valid */
+  validateFiles?: (files: FileList) => boolean;
 };
 
 const UnMemoizedMessageInput = <
